@@ -8,6 +8,26 @@ product:
         limit: {{theme_settings.productpage_related_products_count}}
     similar_by_views:
         limit: {{theme_settings.productpage_similar_by_views_count}}
+gql: "query productById($productId: Int!) {
+    site {
+        product(entityId: $productId) {
+            entityId
+            name
+            categories {
+                edges {
+                    node {
+                        entityId
+                        name
+                        path
+                        defaultImage {
+                            url(width: 256)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}"
 ---
 {{inject 'productId' product.id}}
 
