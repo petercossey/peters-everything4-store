@@ -5,7 +5,7 @@ category:
         limit: {{theme_settings.categorypage_products_per_page}}
 gql: "query StickerCategories {
     site {
-        categoryTree(rootEntityId:33) {
+        categoryTree(rootEntityId:{{theme_settings.stickers_root_id}}) {
             ...CategoryFields
             children {
                 ...CategoryFields
