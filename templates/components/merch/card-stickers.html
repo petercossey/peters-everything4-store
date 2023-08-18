@@ -1,0 +1,22 @@
+{{!-- This example of server-side rendered card stickers relies on the GraphQL Front Matter attribute from
+the category.html template and the CSS styles added to the head block. --}}
+{{assignVar "product_has_stickers" 0}}
+{{#each category}}
+    {{assignVar "category_name" this}}
+    {{#each (get "children" (first ../gql.data.site.categoryTree))}}
+        {{#if (getVar "category_name") '===' this.name}}
+            {{!-- Create div container for all the sticker divs. --}}
+            {{#if (getVar "product_has_stickers") '!==' 1}}
+                <div class="product-stickers">
+                {{assignVar "product_has_stickers" 1}}
+            {{/if}}
+            <div class="product-stickers__sticker">
+                <img src="{{this.image.urlOriginal}}" alt="{{this.name}} icon" data-sticker-id="{{this.entityId}}">
+            </div>
+        {{/if}}
+    {{/each}}
+    {{!-- Add closing tag for div container. --}}
+    {{#if @last}}
+        {{#if (getVar "product_has_stickers")}}</div>{{/if}}
+    {{/if}}
+{{/each}}

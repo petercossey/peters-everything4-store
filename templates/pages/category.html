@@ -3,6 +3,23 @@ category:
     shop_by_price: true
     products:
         limit: {{theme_settings.categorypage_products_per_page}}
+gql: "query StickerCategories {
+    site {
+        categoryTree(rootEntityId:33) {
+            ...CategoryFields
+            children {
+                ...CategoryFields
+            }
+        }
+    }
+}
+fragment CategoryFields on CategoryTreeItem {
+    name
+    entityId
+    image {
+        urlOriginal
+    }
+}"
 ---
 {{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
 {{#partial "head"}}
@@ -12,6 +29,23 @@ category:
     {{#if pagination.category.next}}
         <link rel="next" href="{{pagination.category.next}}">
     {{/if}}
+
+    <style>
+        article.card {
+            position: relative;
+        }
+        .product-stickers {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            display: flex;
+            flex-direction: row;
+        }
+        .product-stickers__sticker {
+            width: 32px;
+            height: auto;
+        }
+    </style>
 {{/partial}}
 
 {{#partial "page"}}
