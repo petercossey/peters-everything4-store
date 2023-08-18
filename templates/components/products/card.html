@@ -134,4 +134,8 @@
         </div>
         {{> components/products/bulk-discount-rates}}
     </div>
+    {{!-- Add custom stickers to product card --}}
+    {{#if gql.data.site.categoryTree}}
+        {{> components/merch/card-stickers}}
+    {{/if}}
 </article>
