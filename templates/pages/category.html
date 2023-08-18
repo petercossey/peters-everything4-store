@@ -5,7 +5,7 @@ category:
         limit: {{theme_settings.categorypage_products_per_page}}
 gql: "query StickerCategories {
     site {
-        categoryTree(rootEntityId:{{theme_settings.stickers_root_id}}) {
+        categoryTree(rootEntityId:33) {
             ...CategoryFields
             children {
                 ...CategoryFields
@@ -89,10 +89,11 @@ article.card {
 }
 </style>
 <script>
-    const StickerData = JSON.parse(`{{{json gql.data.site.categoryTree}}}`);
+    const StickerData = `{{{json gql.data.site.categoryTree}}}`;
     window.addEventListener('load', function() {
         const productCards = document.querySelectorAll('article.card');
         if (StickerData) {
+            const StickerDataParsed = JSON.parse(StickerData);
             productCards.forEach((product) => {
                 // Parse category from data-product-category attribute
                 const categories_text = product.getAttribute('data-product-category');
@@ -100,7 +101,7 @@ article.card {
                 let productHasStickers = false;
                 // check if product has any sticker categories
                 categories.forEach((category) => {
-                    StickerData[0].children.forEach((sticker) => {
+                    StickerDataParsed[0].children.forEach((sticker) => {
                         if (category === sticker.name) {
                             // Create sticker container and append to product card element
                             if (!productHasStickers) {
