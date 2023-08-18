@@ -29,6 +29,23 @@ fragment CategoryFields on CategoryTreeItem {
     {{#if pagination.category.next}}
         <link rel="next" href="{{pagination.category.next}}">
     {{/if}}
+
+    <style>
+        article.card {
+            position: relative;
+        }
+        .product-stickers {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            display: flex;
+            flex-direction: row;
+        }
+        .product-stickers__sticker {
+            width: 32px;
+            height: auto;
+        }
+    </style>
 {{/partial}}
 
 {{#partial "page"}}
@@ -70,65 +87,5 @@ fragment CategoryFields on CategoryTreeItem {
     </div>
 </div>
 
-{{/partial}}
-{{#partial "page_bottom"}}
-<style>
-article.card {
-    position: relative;
-}
-.product-stickers {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    display: flex;
-    flex-direction: row;
-}
-.product-stickers__sticker {
-    width: 32px;
-    height: auto;
-}
-</style>
-<script>
-    const StickerData = `{{{json gql.data.site.categoryTree}}}`;
-    window.addEventListener('load', function() {
-        const productCards = document.querySelectorAll('article.card');
-        if (StickerData) {
-            const StickerDataParsed = JSON.parse(StickerData);
-            productCards.forEach((product) => {
-                // Parse category from data-product-category attribute
-                const categories_text = product.getAttribute('data-product-category');
-                const categories = categories_text.split(',').map(item => item.trim());
-                let productHasStickers = false;
-                // check if product has any sticker categories
-                categories.forEach((category) => {
-                    StickerDataParsed[0].children.forEach((sticker) => {
-                        if (category === sticker.name) {
-                            // Create sticker container and append to product card element
-                            if (!productHasStickers) {
-                                const containerEl = document.createElement('div');
-                                containerEl.setAttribute('class', 'product-stickers');
-                                product.appendChild(containerEl);
-                                productHasStickers = true;
-                            }
-                            // Create the <div> element with class "product-stickers__sticker"
-                            const stickerEl = document.createElement('div');
-                            stickerEl.setAttribute('class', 'product-stickers__sticker');
-                            
-                            // Create the <img> element with its attributes
-                            const stickerImgEl = document.createElement('img');
-                            stickerImgEl.setAttribute('src', sticker.image.urlOriginal);
-                            stickerImgEl.setAttribute('alt', `${sticker.name} icon`);
-                            stickerImgEl.setAttribute('data-sticker-id', sticker.entityId);
-                            
-                            // Append the <img> element as a child of the <div> element
-                            stickerEl.appendChild(stickerImgEl);
-                            product.querySelector('div.product-stickers').appendChild(stickerEl);
-                        }
-                    })
-                });
-            });
-        }
-    });
-</script>
 {{/partial}}
 {{> layout/base}}
