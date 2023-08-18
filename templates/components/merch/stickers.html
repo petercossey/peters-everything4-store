@@ -1,0 +1,28 @@
+<style>
+.productView-images { position: relative; }
+.product-stickers--pdp {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    display: flex;
+    flex-direction: row;
+}
+.product-stickers__sticker {
+    width: 64px;
+    height: auto;
+}
+</style>
+{{!--
+    We can either use "categories" (built-in variable) or result from gql_categories frontmatter,
+    i.e. "gql.data.site.product.categories.edges". Using categories output from gql makes it easier
+    to use the `has` helper to filter on '/stickers/' path.
+--}}
+<div class="product-stickers--pdp">
+    {{#each gql_categories}}
+        {{#has node.path "/stickers/"}}
+            <div class="product-stickers__sticker">
+                <img src="{{node.defaultImage.url}}" alt="{{node.name}} icon" data-sticker-id="{{node.entityId}}">
+            </div>
+        {{/has}}
+    {{/each}}
+</div>

@@ -91,6 +91,8 @@
                 </li>
             {{/each}}
         </ul>
+        {{!-- Add stickers to PDP --}}
+        {{> components/merch/stickers gql_categories=gql.data.site.product.categories.edges}}
     </section>
 
     <section class="productView-details product-data">
