@@ -63,7 +63,6 @@
                     </a>
                 {{/if}}
             </div>
-            {{> components/merch/stickers gql_categories=gql.data.site.product.categories.edges}}
         </figure>
         <ul class="productView-thumbnails"{{#gt product.images.length 5}} data-slick='{
                 "infinite": false,
@@ -92,6 +91,8 @@
                 </li>
             {{/each}}
         </ul>
+        {{!-- Add stickers to PDP --}}
+        {{> components/merch/stickers gql_categories=gql.data.site.product.categories.edges}}
     </section>
 
     <section class="productView-details product-data">

@@ -7,10 +7,10 @@ the category.html template and the CSS styles added to the head block. --}}
         {{#if (getVar "category_name") '===' this.name}}
             {{!-- Create div container for all the sticker divs. --}}
             {{#if (getVar "product_has_stickers") '!==' 1}}
-                <div class="product-stickers">
+                <div class="product-stickers--plp">
                 {{assignVar "product_has_stickers" 1}}
             {{/if}}
-            <div class="product-stickers__sticker">
+            <div class="product-stickers__sticker--smol">
                 <img src="{{this.image.urlOriginal}}" alt="{{this.name}} icon" data-sticker-id="{{this.entityId}}">
             </div>
         {{/if}}
